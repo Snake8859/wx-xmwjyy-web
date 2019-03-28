@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xmwjyy.wxx.web.mapper.CustomeMapper">
+
+	<resultMap type="com.xmwjyy.wxx.web.pojo.TbAuthenticationPicture" id="authPicResult">
+		<!-- 配置主键 -->
+		<id property="apid" column="apid" />
+		<result property="picname" column="picname"/>
+	</resultMap>
+	
+	<!-- 根据apid查询鉴定图片 -->
+	<select id="selectAuthPicByApid" parameterType="String" resultMap="authPicResult">
+		SELECT
+			apid,
+			picname
+		FROM
+		tb_authentication_picture
+		<where>
+			uaid=#{uaid}
+		</where>
+	</select>
+	
+	<resultMap type="com.xmwjyy.wxx.web.pojo.CustomAuthOrAuditInfo" id="authOrAuditInfoMap">
+		<id property="uaid" column="uaid" />
+		<result property="taid" column="taid" />
+		<result property="taname" column="taname" />
+		<result property="content" column="content" />
+		<result property="expertreply" column="expertreply" />
+		<result property="openid" column="openid"/>
+		<result property="nickname" column="nickname"/>
+		<result property="replystate" column="replystate" />
+		<result property="auditstate" column="auditstate" />
+		<result property="createtime" column="createtime" />
+		<!-- 配置一对多关系 -->
+		<collection property="picList" column="uaid" ofType="com.xmwjyy.wxx.web.pojo.TbAuthenticationPicture" 
+				select="selectAuthPicByApid">
+		</collection>
+	</resultMap>
+	
+	
+	<!-- 根据QueryVo查询鉴定信息 -->
+	<select id="selectAuthOrAuditInfoByQueryVo" resultMap="authOrAuditInfoMap" parameterType="com.xmwjyy.wxx.web.pojo.QueryVo">
+		SELECT
+			t1.uaid,
+			t1.taid,
+			t1.expertreply,
+			t1.openid,
+			t2.nickname,
+			t1.replystate,
+			t1.content,
+			t1.auditstate,
+			t1.address,
+			t1.createtime
+		FROM
+			tb_user_authentication t1
+		LEFT JOIN tb_user t2 ON t1.openid = t2.openid
+		<if test="start!=null">
+			LIMIT #{start},#{size}
+		</if>
+	</select>
+	
+	<!-- 查询鉴定信息的总条数 -->
+	<select id="selectAuthInfoCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tb_user_authentication
+	</select>
+	
+	
+</mapper>

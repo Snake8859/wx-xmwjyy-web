@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xmwjyy.wxx.web.mapper.TbTechnicalClassificationMapper" >
+  <resultMap id="BaseResultMap" type="com.xmwjyy.wxx.web.pojo.TbTechnicalClassification" >
+    <id column="tcid" property="tcid" jdbcType="INTEGER" />
+    <result column="tcname" property="tcname" jdbcType="VARCHAR" />
+    <result column="tcintroduction" property="tcintroduction" jdbcType="VARCHAR" />
+    <result column="tcpic" property="tcpic" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tcid, tcname, tcintroduction, tcpic, createtime, updatetime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xmwjyy.wxx.web.pojo.TbTechnicalClassificationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_technical_classification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_technical_classification
+    where tcid = #{tcid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_technical_classification
+    where tcid = #{tcid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xmwjyy.wxx.web.pojo.TbTechnicalClassificationExample" >
+    delete from tb_technical_classification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xmwjyy.wxx.web.pojo.TbTechnicalClassification" >
+    insert into tb_technical_classification (tcid, tcname, tcintroduction, 
+      tcpic, createtime, updatetime
+      )
+    values (#{tcid,jdbcType=INTEGER}, #{tcname,jdbcType=VARCHAR}, #{tcintroduction,jdbcType=VARCHAR}, 
+      #{tcpic,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xmwjyy.wxx.web.pojo.TbTechnicalClassification" >
+    insert into tb_technical_classification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tcid != null" >
+        tcid,
+      </if>
+      <if test="tcname != null" >
+        tcname,
+      </if>
+      <if test="tcintroduction != null" >
+        tcintroduction,
+      </if>
+      <if test="tcpic != null" >
+        tcpic,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tcid != null" >
+        #{tcid,jdbcType=INTEGER},
+      </if>
+      <if test="tcname != null" >
+        #{tcname,jdbcType=VARCHAR},
+      </if>
+      <if test="tcintroduction != null" >
+        #{tcintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="tcpic != null" >
+        #{tcpic,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xmwjyy.wxx.web.pojo.TbTechnicalClassificationExample" resultType="java.lang.Integer" >
+    select count(*) from tb_technical_classification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_technical_classification
+    <set >
+      <if test="record.tcid != null" >
+        tcid = #{record.tcid,jdbcType=INTEGER},
+      </if>
+      <if test="record.tcname != null" >
+        tcname = #{record.tcname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tcintroduction != null" >
+        tcintroduction = #{record.tcintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tcpic != null" >
+        tcpic = #{record.tcpic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_technical_classification
+    set tcid = #{record.tcid,jdbcType=INTEGER},
+      tcname = #{record.tcname,jdbcType=VARCHAR},
+      tcintroduction = #{record.tcintroduction,jdbcType=VARCHAR},
+      tcpic = #{record.tcpic,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xmwjyy.wxx.web.pojo.TbTechnicalClassification" >
+    update tb_technical_classification
+    <set >
+      <if test="tcname != null" >
+        tcname = #{tcname,jdbcType=VARCHAR},
+      </if>
+      <if test="tcintroduction != null" >
+        tcintroduction = #{tcintroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="tcpic != null" >
+        tcpic = #{tcpic,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tcid = #{tcid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xmwjyy.wxx.web.pojo.TbTechnicalClassification" >
+    update tb_technical_classification
+    set tcname = #{tcname,jdbcType=VARCHAR},
+      tcintroduction = #{tcintroduction,jdbcType=VARCHAR},
+      tcpic = #{tcpic,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where tcid = #{tcid,jdbcType=INTEGER}
+  </update>
+</mapper>
